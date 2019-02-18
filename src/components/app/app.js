@@ -41,6 +41,22 @@ export default class App extends Component {
       });      
     };
 
+
+    this.searchChange = (text) => {      
+      this.setState(({ todoData }) => { 
+        const result = todoData.map((el) => {            
+          if ( el.label.toLowerCase().indexOf(text.toLowerCase()) !== -1) {            
+            return {...el, hide: false};
+          } else {
+            return {...el, hide: true};
+          }         
+        });
+        return {
+          todoData: result
+        };
+      });
+    }
+
     this.addItem = (text) => {
       this.setState(({ todoData }) => {
         const newItem = this.createTodoItem(text);
@@ -89,6 +105,7 @@ export default class App extends Component {
       label: label, 
       important: false,
       done: false,
+      hide: false,
       id: this.startId++
     };
   };
@@ -104,7 +121,9 @@ export default class App extends Component {
       <div className="todo-app">
         <AppHeader toDo={todoCount} done={doneCount} />
         <div className="top-panel d-flex">
-          <SearchPanel />
+          <SearchPanel 
+            onSearchChange={ this.searchChange }
+          />
           <ItemStatusFilter />
         </div>
   
