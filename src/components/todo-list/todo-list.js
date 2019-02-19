@@ -11,22 +11,17 @@ const TodoList = ({ todos, onDeleted,
 
     const { id, ...itemProps } = item; 
 
-    if ( !item.hide ) {
-      return (
-        <li key={ id } className="list-group-item">
-          <TodoListItem
-              { ...itemProps }
-              onDeleted={() => onDeleted(id)}
-              onToggleImportant={() => onToggleImportant(id)}
-              onToggleDone={() => onToggleDone(id)}
-  
-            />
-        </li>
-      );
-    }
-    return null;
+    return (
+      <li key={ id } className="list-group-item">
+        <TodoListItem
+            { ...itemProps }
+            onDeleted={() => onDeleted(id)}
+            onToggleImportant={() => onToggleImportant(id)}
+            onToggleDone={() => onToggleDone(id)}
 
-    
+          />
+      </li>
+    );
   });
 
   return (
