@@ -18,11 +18,10 @@ export default class App extends Component {
 
     this.state = {
       todoData: [
-        this.createTodoItem('Drink Coffee'),
+        this.createTodoItem('Drink Coffe'),
         this.createTodoItem('Make Awesome App'),
         this.createTodoItem('Have a lunch')
-      ],
-      show: 'all'
+      ]
     };
 
     this.deleteItem = (id) => {
@@ -42,9 +41,9 @@ export default class App extends Component {
       });      
     };
 
+
     this.searchChange = (text) => {      
-      this.setState(({ todoData, show }) => { 
-        
+      this.setState(({ todoData }) => { 
         const result = todoData.map((el) => {            
           if ( el.label.toLowerCase().indexOf(text.toLowerCase()) !== -1) {            
             return {...el, hide: false};
@@ -56,61 +55,6 @@ export default class App extends Component {
           todoData: result
         };
       });
-    }
-
-    this.filterElements = () => {
-      this.setState(({ todoData, show }) => {
-        let result;
-        if ( show === 'active' ) {
-          result = todoData.map((el) => {
-            if ( el.done === false ) {
-              return {...el, hide: false}
-            } else {
-              return {...el, hide: true};
-            } 
-          });
-        } else if ( show === 'dones' ) {
-           result = todoData.map((el) => {
-            if ( el.done === true ) {
-              return {...el, hide: false}
-            } else {
-              return {...el, hide: true};
-            } 
-          });
-        } else if ( show === 'all' ) {
-          result = todoData.map((el) => {
-            return {...el, hide: false}
-          });
-        }
-        // console.log(result);
-        return {
-          todoData: result
-        };
-      });
-    }
-
-
-    this.onFilter = (param, target) => {
-      // console.log(target.siblings());
-      if (target.classList.contains('btn-outline-secondary')) {
-        target.classList.remove('btn-outline-secondary');
-        const btns = document.querySelectorAll('.btn-group .btn');
-        btns.forEach((el) => {
-          if (el.classList.contains('btn-info')) {
-            el.classList.remove('btn-info');
-            el.classList.add('btn-outline-secondary');
-          }
-        });
-        target.classList.add('btn-info');
-
-      }
-      
-      this.setState({
-        show: param
-      });
-      
-      this.filterElements();
-      
     }
 
     this.addItem = (text) => {
@@ -180,9 +124,7 @@ export default class App extends Component {
           <SearchPanel 
             onSearchChange={ this.searchChange }
           />
-          <ItemStatusFilter 
-            onFilter={ this.onFilter }
-          />
+          <ItemStatusFilter />
         </div>
   
         <TodoList 
