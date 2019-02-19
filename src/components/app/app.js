@@ -18,11 +18,10 @@ export default class App extends Component {
 
     this.state = {
       todoData: [
-        this.createTodoItem('Drink Coffee'),
+        this.createTodoItem('Drink Coffe'),
         this.createTodoItem('Make Awesome App'),
         this.createTodoItem('Have a lunch')
-      ],
-      show: 'all'
+      ]
     };
 
     this.deleteItem = (id) => {
@@ -41,6 +40,22 @@ export default class App extends Component {
         };
       });      
     };
+
+
+    this.searchChange = (text) => {      
+      this.setState(({ todoData }) => { 
+        const result = todoData.map((el) => {            
+          if ( el.label.toLowerCase().indexOf(text.toLowerCase()) !== -1) {            
+            return {...el, hide: false};
+          } else {
+            return {...el, hide: true};
+          }         
+        });
+        return {
+          todoData: result
+        };
+      });
+    }
 
     this.addItem = (text) => {
       this.setState(({ todoData }) => {
